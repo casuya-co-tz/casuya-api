@@ -10,6 +10,8 @@
     "clean": "rimraf dist",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/ --ext .ts",
+    "dev": "tsc && node dist/server.js",
+    "start": "node dist/server.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

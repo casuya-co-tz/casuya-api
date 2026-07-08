@@ -1,0 +1,12 @@
+{
+  "name": "casuya-api",
+  "version": "1.0.0",
+  "endpoints": [
+    { "method": "GET", "path": "/health", "responseSchema": { "type": "object", "properties": { "status": { "type": "string" } } } },
+    { "method": "GET", "path": "/v1/lessons", "responseSchema": { "type": "array" } },
+    { "method": "POST", "path": "/v1/lessons", "requestSchema": { "type": "object" }, "responseSchema": { "type": "object" } }
+  ],
+  "events": [
+    { "type": "lesson.published", "version": 1, "schema": { "type": "object" } }
+  ]
+}
