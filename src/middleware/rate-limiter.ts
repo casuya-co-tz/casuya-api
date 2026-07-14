@@ -10,9 +10,19 @@ export class RateLimiter {
   private windowMs: number;
   private maxRequests: number;
 
+  private cleanupTimer: ReturnType<typeof setInterval> | null = null;
+
   constructor(windowMs: number = 60000, maxRequests: number = 100) {
     this.windowMs = windowMs;
     this.maxRequests = maxRequests;
+    this.cleanupTimer = setInterval(() => this.cleanup(), 60000);
+  }
+
+  destroy(): void {
+    if (this.cleanupTimer) {
+      clearInterval(this.cleanupTimer);
+      this.cleanupTimer = null;
+    }
   }
 
   middleware() {
@@ -52,7 +62,7 @@ export class RateLimiter {
   }
 
   private getKey(req: Request): string {
-    return req.ip || req.headers['x-forwarded-for'] as string || 'unknown';
+    return req.ip || 'unknown';
   }
 
   cleanup(): void {

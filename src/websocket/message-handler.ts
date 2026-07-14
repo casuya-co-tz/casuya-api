@@ -45,6 +45,9 @@ export class MessageRouter {
       }
     } catch (error) {
       this.logger.error('Failed to route WebSocket message', { error: String(error) });
+      if (client.socket.readyState === WebSocket.OPEN) {
+        this.sendError(client.socket, '', `Failed to parse message: ${String(error)}`);
+      }
     }
   }
 

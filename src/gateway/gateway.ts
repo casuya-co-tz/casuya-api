@@ -99,7 +99,12 @@ export class Gateway implements IEngine {
     }
 
     return new Promise((resolve) => {
-      this.server?.close(() => {
+      if (!this.server) {
+        this.running = false;
+        resolve();
+        return;
+      }
+      this.server.close(() => {
         this.running = false;
         this.logger.info('Gateway stopped');
         resolve();
